@@ -1,0 +1,88 @@
+import random
+import time
+
+# Define the player class
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.health = 100
+        self.mana = 50
+        self.items = {'Potion': 2}
+        self.attacks = {'Slash': 10, 'Stab': 15, 'Fireball': 20, 'Thunder': 25}
+        self.magic = {'Heal': 10, 'Mana Boost': 20}
+
+    # Print out the player's stats
+    def show_stats(self):
+        print(self.name)
+        print('Health:', self.health)
+        print('Mana:', self.mana)
+        print('Items:', self.items)
+
+    # Use an item to restore health or mana
+    def use_item(self, item):
+        if item in self.items:
+            if item == 'Potion' and self.health < 100:
+                self.health += 20
+                if self.health > 100:
+                    self.health = 100
+                print(self.name, 'used a Potion')
+                self.items['Potion'] -= 1
+                if self.items['Potion'] == 0:
+                    del self.items['Potion']
+            elif item == 'Mana Potion' and self.mana < 50:
+                self.mana += 10
+                if self.mana > 50:
+                    self.mana = 50
+                print(self.name, 'used a Mana Potion')
+                self.items['Mana Potion'] -= 1
+                if self.items['Mana Potion'] == 0:
+                    del self.items['Mana Potion']
+        else:
+            print('Invalid item')
+
+    # Use an attack to damage the opponent
+    def use_attack(self, attack, opponent):
+        if attack in self.attacks:
+            damage = self.attacks[attack]
+            if damage > opponent.health:
+                damage = opponent.health
+            opponent.health -= damage
+            print(self.name, 'used', attack, 'and dealt', damage, 'damage to', opponent.name)
+        else:
+            print('Invalid attack')
+
+    # Use magic to heal or boost mana
+    def use_magic(self, spell):
+        if spell in self.magic:
+            if spell == 'Heal' and self.health < 100:
+                self.health += self.magic[spell]
+                if self.health > 100:
+                    self.health = 100
+                print(self.name, 'used', spell, 'and healed for', self.magic[spell], 'points')
+            elif spell == 'Mana Boost' and self.mana < 50:
+                self.mana += self.magic[spell]
+                if self.mana > 50:
+                    self.mana = 50
+                print(self.name, 'used', spell, 'and restored', self.magic[spell], 'mana')
+            else:
+                print('Invalid spell')
+        else:
+            print('Invalid spell')
+
+# Define the game function
+def game():
+    # Initialize the players
+    player1 = Player('Player 1')
+    player2 = Player('Player 2')
+
+    # Display the players' stats
+    player1.show_stats()
+    player2.show_stats()
+
+    # Start the game loop
+    while player1.health > 0 and player2.health > 0:
+        # Player 1's turn
+        print('It is', player1.name + "'s turn")
+        action = input('What would you like to do? (attack, magic, item): ')
+        if action == 'attack':
+            attack = input('Which attack would you like to use

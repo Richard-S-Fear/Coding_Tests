@@ -1,0 +1,63 @@
+#this script defines a function draw_stick_figure() that prints out two stick figures facing each other, one on the left and one on the right. The fight() function sets up a game where two players take turns attacking and defending. Each player starts with 10 health points. During a player's turn, their stick figure is displayed on the screen, and the opposing player is prompted to defend themselves. The defending player randomly chooses a defense move, and if they fail to defend against the attack, they lose one health point. The game continues until one player's health points reach 0 or below.
+import random
+import time
+
+def draw_stick_figure(x, y):
+    print(' ' * x + '0' + ' ' * (3 - x) + '|')
+    print(' ' * x + '/' + '|' + '\\' + ' ' * (3 - x) + '|')
+    print(' ' * x + '/' + ' ' + '\\' + ' ' * (3 - x) + '|')
+    print(' ' * x + '|' + ' ' * (3 - x) + '|')
+    print(' ' * x + '|' + ' ' * (3 - x) + '|')
+    print(' ' * y + '0' + ' ' * (3 - y) + '|')
+    print(' ' * y + '/' + '|' + '\\' + ' ' * (3 - y) + '|')
+    print(' ' * y + '/' + ' ' + '\\' + ' ' * (3 - y) + '|')
+    print(' ' * y + '|' + ' ' * (3 - y) + '|')
+    print(' ' * y + '|' + ' ' * (3 - y) + '|')
+
+def fight():
+    health1 = 10
+    health2 = 10
+    print('Player 1, your health is', health1)
+    print('Player 2, your health is', health2)
+    time.sleep(1)
+
+    while health1 > 0 and health2 > 0:
+        print('Player 1, it is your turn')
+        time.sleep(1)
+        draw_stick_figure(0, 0)
+        draw_stick_figure(3, 3)
+        print('Player 2, defend yourself!')
+        time.sleep(1)
+        defense = random.randint(0, 3)
+        if defense == 3:
+            print('Player 2 defended the attack!')
+        else:
+            health2 -= 1
+            print('Player 2 was hit!')
+        print('Player 1, your health is', health1)
+        print('Player 2, your health is', health2)
+        if health2 <= 0:
+            print('Player 1 wins!')
+            return
+        time.sleep(1)
+
+        print('Player 2, it is your turn')
+        time.sleep(1)
+        draw_stick_figure(3, 3)
+        draw_stick_figure(0, 0)
+        print('Player 1, defend yourself!')
+        time.sleep(1)
+        defense = random.randint(0, 3)
+        if defense == 3:
+            print('Player 1 defended the attack!')
+        else:
+            health1 -= 1
+            print('Player 1 was hit!')
+        print('Player 1, your health is', health1)
+        print('Player 2, your health is', health2)
+        if health1 <= 0:
+            print('Player 2 wins!')
+            return
+        time.sleep(1)
+
+fight()
